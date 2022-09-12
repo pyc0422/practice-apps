@@ -1,7 +1,8 @@
 require("dotenv").config();
 
 const path = require("path");
-
+const outFile = path.join(__dirname, "./client/dist");
+const ipFile = path.join(__dirname, "./client/src");
 /*
   What should go here?  Great question!
 
@@ -12,4 +13,21 @@ const path = require("path");
   index.html and styles.css to dist folder upon build
 */
 
-module.exports = {};
+module.exports = {
+  entry: `${ipFile}/index.jsx`,
+  output: {
+    path: outFile,
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?/,
+        exclude: /node_modules/,
+        use: {
+          loader:'babel-loader'
+        }
+      }
+    ]
+  }
+};
