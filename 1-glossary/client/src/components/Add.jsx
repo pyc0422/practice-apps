@@ -39,15 +39,17 @@ class Add extends React.Component {
             Words:
             <input type="text" id="word"/>
           </label>
-
+          <br/>
           <label>
             Definition:
             <input type="text" id="define"/>
           </label>
-
-          <input type="submit" value="Add" />
+          <br/>
+          <input class="btn" type="submit" value="Add" />
         </form>
       </div>
     )
   }
 }
+
+export default Add;

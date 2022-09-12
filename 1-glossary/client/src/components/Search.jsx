@@ -20,10 +20,10 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <form onSubmit={this.search.bind(this)}>
         <input onChange={this.handleChange.bind(this)} type="text" value={this.state.input}/>
-        <button onClick={this.search.bind(this)} value="Search"></button>
-      </div>
+        <input class='btn' type="submit" value="Search"></input>
+      </form>
     )
   }
 }

@@ -8,7 +8,7 @@
     "build": "npx webpack",
     "start": "node server/index.js"
   },
-  "license": "Unlicensed",
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
@@ -23,5 +23,8 @@
     "react-dom": "^17.0.2",
     "webpack": "^5.41.0",
     "webpack-cli": "^4.7.2"
-  }
+  },
+  "devDependencies": {},
+  "author": "Yuchen Pan",
+  "description": ""
 }
