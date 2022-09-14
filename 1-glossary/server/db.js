@@ -1,29 +1,54 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const Promise = require("bluebird");
+//const Promise = require("bluebird");
 const getWords = require("./helper");
-console.log(typeof getWords);
-mongoose.connect('mongodb://localhost:5000/glassary');
+mongoose.connect('mongodb://localhost/glossary', { useNewUrlParser: true, useUnifiedTopology: true });
 
-const wordsSchema = new mongoose.Schema({
+let wordsSchema = new mongoose.Schema({
   word: String,
   definition: String,
   createAt: {type: Date, default: Date.now}
 })
 
-const Words = mongoose.model('Words', wordsSchema);
+let Words = mongoose.model('Words', wordsSchema);
+//add some random words at beginning
+// Words.find({})
+//   .then((data) => {
+//     if (data.length !== 0) {
+//       let message = 'already has data';
+//       throw message;
+//     } else {
+//       const newWords = getWords();
+//       let promises = [];
+//       newWords.forEach(word => {
+//         promises.push(Words.create(word));
+//       });
+//       Promise.all(promises);
+//     }
+//   })
 
 
-const preWords = () => {
-  const newWords = getWords();
-  let promises = [];
-  newWords.forEach(word => {
-    promises.push(Words.create(word));
-  });
-  Promiseify.All(promises);
+module.exports = {
+  preWords: () => {
+    Words.deleteMany({});
+    const newWords = getWords();
+    let promises = [];
+    newWords.forEach(word => {
+      promises.push(Words.create(word));
+    });
+    Promise.all(promises);
+  },
+
+  findAll: () => {
+    return Words.find({}).sort('-createAt').limit(10);
+  },
+
+  save: (newWord) => {
+    return Words.create(newWord)
+  }
 }
 
-module.exports = Words;
+
 // 1. Use mongoose to establish a connection to MongoDB
 // 2. Set up any schema and models needed by the app
 // 3. Export the models

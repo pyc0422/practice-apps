@@ -13,13 +13,14 @@ class Add extends React.Component {
   handleChange(e) {
     let value = e.target.value;
     let id = e.target.id;
+    console.log(value, id);
     if (id === 'word') {
       this.setState({
         word: value
       })
     } else if (id === 'define') {
       this.setState({
-        difinition: value
+        definition: value
       })
     }
   }
@@ -27,14 +28,20 @@ class Add extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let newWord = {word: this.state.word, definition: this.state.definition}
-    console.log('New Word will be added: ', newWord);
+    this.props.add(newWord)
+     .then(() => {
+      this.setState({
+        word: '',
+        definition: ''
+      })
+     })
   }
 
   render() {
     return (
       <div>
         <h2> Add New Words</h2>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form onSubmit={this.handleSubmit.bind(this)} onChange={this.handleChange.bind(this)}>
           <label>
             Words:
             <input type="text" id="word"/>
@@ -45,7 +52,7 @@ class Add extends React.Component {
             <input type="text" id="define"/>
           </label>
           <br/>
-          <input class="btn" type="submit" value="Add" />
+          <input className="btn" type="submit" value="Add" />
         </form>
       </div>
     )
