@@ -52,7 +52,8 @@ module.exports = {
   },
 
   deleteOne: (word) => {
-    return Words.deleteOne(word);
+    console.log('deleteOne: ', word);
+    return Words.deleteOne({_id: word._id});
   },
 
   findByKeyWord: (keyWord) => {

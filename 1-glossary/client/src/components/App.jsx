@@ -49,9 +49,9 @@ class App extends React.Component {
 
   delete(word) {
     console.log('delete clicked!', word);
-    return axios.delete('/delete', word)
+    return axios.delete('/delete', {data: word})
       .then(() => {
-        this.update();
+        return this.update();
       })
       .then(() => {
         alert(`Delete ${word.word} successful!`);
