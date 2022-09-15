@@ -41,15 +41,21 @@ class App extends React.Component {
           words: res.data
         })
       })
-
   }
 
-  edit(e) {
-   console.log('edit clicked!', e.target.value);
+  edit(before, after) {
+    return axios.post('/edit', {before: before, after: after})
   }
 
-  delete(e) {
-    console.log('delete clicked!', e.target.value);
+  delete(word) {
+    console.log('delete clicked!', word);
+    return axios.delete('/delete', word)
+      .then(() => {
+        this.update();
+      })
+      .then(() => {
+        alert(`Delete ${word.word} successful!`);
+      })
   }
   componentDidMount() {
     console.log('update');
@@ -65,7 +71,15 @@ class App extends React.Component {
         <Add add={this.add.bind(this)}/>
         <Search search={this.search.bind(this)}/>
         <h2>Exists Word and Definition: </h2>
-        <WordsList words={this.state.words} edit={this.edit.bind(this)} delete={this.delete.bind(this)}/>
+        <table>
+          <thead>
+            <tr><th>Word</th><th>Definition</th><th>Options</th><th>CreateAt</th></tr>
+          </thead>
+          <tbody>
+            {this.state.words.map(word => <WordsList word={word} key={word._id} update={this.edit.bind(this)} delete={this.delete.bind(this)}/>)}
+          </tbody>
+        </table>
+
       </div>
     )
 

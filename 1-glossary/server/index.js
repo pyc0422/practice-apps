@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const port = 3000;
-const { preWords, findAll, save, findByKeyWord } = require("./db");
+const { preWords, findAll, save, findByKeyWord, update, deleteOne } = require("./db");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,10 +37,25 @@ app.post('/search', (req, res) => {
       } else {
         res.status(200).json(results);
       }
-
-
     })
 });
+
+app.post('/edit', (req, res) => {
+  let oldWord = req.body.before;
+  let newWord = req.body.after;
+  return update(oldWord, newWord)
+    .then(() => {
+      res.status(201).send('success');
+    })
+})
+
+app.delete('/delete', (req, res) => {
+  const word = req.body;
+  return deleteOne(word)
+    .then(() => {
+      res.status(200).send('delete word success!');
+    })
+})
 app.listen(port, (req) => {
   console.log(`listening on port ${port}`)
 })

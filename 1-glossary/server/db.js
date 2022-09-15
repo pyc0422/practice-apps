@@ -51,13 +51,19 @@ module.exports = {
     return Words.updateOne(word);
   },
 
-  delete: (word) => {
+  deleteOne: (word) => {
     return Words.deleteOne(word);
   },
 
   findByKeyWord: (keyWord) => {
     console.log('db key: ', keyWord);
     return Words.find({word: {$regex: keyWord, $options: 'i'}});
+  },
+
+  update: (before, after) => {
+    //let id = before._id;
+    return Words.updateOne(before, after);
+
   }
 }
 
