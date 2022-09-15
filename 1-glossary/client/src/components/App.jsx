@@ -1,8 +1,8 @@
 import React from 'react';
 import Add from './Add.jsx';
 import Search from './Search.jsx';
-import WordListEntry from './WordListEntry.jsx';
-
+import WordsList from './WordsList.jsx';
+import axios from 'axios';
 class App extends React.Component {
   constructor(props) {
     super (props);
@@ -13,32 +13,43 @@ class App extends React.Component {
 
   add(word) {
     console.log(word, 'started add!');
-    return fetch("./add", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(word)
-    })
-    .then(res => res.json())
-    .then(() => {
-      this.update();
-    });
+    return axios.post('/add', word)
+      .then(() => {
+        this.update();
+      })
   }
 
   search(key) {
     console.log(key, ' started search!');
+    return axios.post('/search', {key})
+      .then((res) => {
+        console.log(res);
+        if (typeof res.data === 'string') {
+          alert(`Cannot find any word similar with ${key}`)
+        } else {
+          this.setState({
+            words: res.data
+          })
+        }
+      })
   }
 
   update() {
-    return fetch('/update')
-      .then(res => res.json())
-      .then(json => {
+    return axios.get('/update')
+      .then((res) => {
         this.setState({
-          words: json
+          words: res.data
         })
-      });
+      })
 
+  }
+
+  edit(e) {
+   console.log('edit clicked!', e.target.value);
+  }
+
+  delete(e) {
+    console.log('delete clicked!', e.target.value);
   }
   componentDidMount() {
     console.log('update');
@@ -54,14 +65,7 @@ class App extends React.Component {
         <Add add={this.add.bind(this)}/>
         <Search search={this.search.bind(this)}/>
         <h2>Exists Word and Definition: </h2>
-        <table>
-          <thead>
-            <tr><th>Word</th><th>Definition</th><th>Options</th><th>CreateAt</th></tr>
-          </thead>
-          <tbody>
-            {this.state.words.map(word => <WordListEntry word={word} key={word._id} />)}
-          </tbody>
-        </table>
+        <WordsList words={this.state.words} edit={this.edit.bind(this)} delete={this.delete.bind(this)}/>
       </div>
     )
 

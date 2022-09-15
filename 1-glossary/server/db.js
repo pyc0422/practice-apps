@@ -45,6 +45,19 @@ module.exports = {
 
   save: (newWord) => {
     return Words.create(newWord)
+  },
+
+  edit: (word) => {
+    return Words.updateOne(word);
+  },
+
+  delete: (word) => {
+    return Words.deleteOne(word);
+  },
+
+  findByKeyWord: (keyWord) => {
+    console.log('db key: ', keyWord);
+    return Words.find({word: {$regex: keyWord, $options: 'i'}});
   }
 }
 
