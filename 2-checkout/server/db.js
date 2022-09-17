@@ -29,7 +29,7 @@ db.connectAsync()
         city VARCHAR(40) NOT NULL,
         state VARCHAR(100) NOT NULL,
         zip VARCHAR(20) NOT NULL,
-        phone VARCHAR(200) NOT NULL,
+        phone VARCHAR(400) NOT NULL,
         creditCard VARCHAR(400) NOT NULL,
         expired VARCHAR (20) NOT NULL,
         cvv INT NOT NULL,

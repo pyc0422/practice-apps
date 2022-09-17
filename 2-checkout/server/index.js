@@ -36,9 +36,7 @@ app.post('/', (req, res) => {
     } else {
       res.status(201).send('OK');
     }
-
   })
-
 })
 
 app.listen(process.env.PORT);
