@@ -19,7 +19,7 @@ class App extends React.Component {
 
   handleSubmit(data) {
     console.log('finnal data: ', data);
-    axios.post('/', data)
+    axios.post('/form', data)
       .then(() => {
         this.setState({
           clicked: false

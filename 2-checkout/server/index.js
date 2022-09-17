@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 // Adds `req.session_id` based on the incoming cookie value.
 // Generates a new session if one does not exist.
-app.use(sessionHandler);
+//app.use(sessionHandler);
 
 // Logs the time, session_id, method, and url of incoming requests.
 app.use(logger);
@@ -23,7 +23,8 @@ app.get('/', (req, res) => {
   res.render('../../client/dist/index.html');
 })
 
-app.post('/', (req, res) => {
+app.post('/form', sessionHandler, (req, res) => {
+
   const data = req.body;
   data.s_id = req.session_id;
   let query = `INSERT INTO responses(name, email, password, line, city, state, zip, phone, creditCard, expired, cvv, billing_zip, s_id)

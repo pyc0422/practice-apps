@@ -6,8 +6,13 @@ module.exports = (req, res, next) => {
    * Parse cookies in incoming request:
    *
    */
-
+  // console.log('origin cookie: ', req.headers.cookies);
+  // if (!req.cookies) {
+  //   console.log('no cookies!');
+  // }
+  console.log('start parsing cookies');
   let cookieString = req.get("Cookie") || "";
+  console.log('cookiesString: ', cookieString);
 
   parsedCookies = cookieString.split("; ").reduce((cookies, cookie) => {
     if (cookie.length) {
@@ -25,6 +30,8 @@ module.exports = (req, res, next) => {
     req.session_id = uuidv4();
     res.cookie("s_id", req.session_id);
   }
-
   next();
+
+
+
 };
