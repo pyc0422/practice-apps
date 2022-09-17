@@ -1,78 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card.jsx';
 
-class Address extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      line1: '',
-      line2: '',
-      city: '',
-      state: '',
-      zip: 0,
-      phone:0,
-      clicked: false
-    }
-  }
 
-  handleChange(e) {
-    let value = e.target.value;
-    let id = e.target.id;
-    if (id === 'name') {
-      this.setState({
-        name: value
-      })
-    } else if (id === 'email') {
-      this.setState({
-        email: value
-      })
-    } else if (id === 'password') {
-      this.setState({
-        password: value
-      })
+const Address = (props) =>{
+  const [line1, setLine1] = useState('');
+  const [line2, setLine2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setStates] = useState('');
+  const [zip, setZip] = useState('');
+  const [phone, setPhone] = useState('');
+  const [clicked, setClicked] = useState(false);
+  if (clicked) {
+    let address = {
+      line1: line1,
+      line2: line2,
+      city: city,
+      state: state,
+      zip: zip,
+      phone: phone
     }
-  }
-  render(){
-    if (this.state.clicked) {
-      let address = {
-        line1: this.state.line1,
-        line2: this.state.line2,
-        city: this.state.city,
-        state: this.state.state,
-        zip: this.state.zip,
-        phone:this.state.phone
-      }
-      return <Card user={this.props.user} address={address}/>
-    } else {
-      return (
+    return <Card user={props.user} address={address} submit={props.submit}/>
+  } else {
+    return (
+      <div>
+        <h2>Address</h2>
+        <p>{JSON.stringify(props.user)}</p>
         <form>
           <label>Line1:
-            <input type="text" id='line1' value={this.state.line1}/>
+            <input type="text" onChange={(e) => setLine1(e.target.value)} value={line1}/>
           </label>
           <br/>
           <label>Line2:
-            <input type="text" id='line2' value={this.state.line2}/>
+            <input type="text" onChange={(e) => setLine2(e.target.value)} value={line2}/>
           </label>
           <br/>
           <label>City:
-            <input type="text" id='city' value={this.state.city}/>
+            <input type="text" onChange={(e) => setCity(e.target.value)} value={city}/>
           </label>
           <label>State:
-            <input type="text" id='state' value={this.state.state}/>
+            <input type="text" onChange={(e) => setStates(e.target.value)} value={state}/>
           </label>
           <label>Zip Code:
-            <input type="text" id='zip' value={this.state.zip}/>
+            <input type="text" onChange={(e) => setZip(e.target.value)} value={zip}/>
           </label>
           <br/>
           <label>Phone Number:
-            <input type="text" id='phone' value={this.state.phone}/>
+            <input type="text" onChange={(e) => setPhone(e.target.value)} value={phone}/>
           </label>
           <br/>
-          <input type="button" value="Next" />
+          <input type="button" onClick={() => {setClicked(true)}} value="Next" />
         </form>
-      )
-    }
+      </div>
+    )
   }
+
+}
+const List =(props) => {
+  return (
+    <div>
+      {props.item}
+
+    </div>
+  )
 }
 
 export default Address;

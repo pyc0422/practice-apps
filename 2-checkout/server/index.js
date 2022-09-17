@@ -7,7 +7,8 @@ const logger = require("./middleware/logger");
 const db = require("./db");
 
 const app = express();
-
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 // Adds `req.session_id` based on the incoming cookie value.
 // Generates a new session if one does not exist.
 app.use(sessionHandler);
@@ -20,6 +21,24 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get('/', (req, res) => {
   res.render('../../client/dist/index.html');
+})
+
+app.post('/', (req, res) => {
+  const data = req.body;
+  data.s_id = req.session_id;
+  let query = `INSERT INTO responses(name, email, password, s_id, line, city, state, zip, phone, creaditCard, expired, cvv, billing_zip)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  let params = Object.keys(data);
+  console.log(params);
+  db.query(query, params, (err) => {
+    if (err){
+      console.log(err);
+    } else {
+      res.status(201).send('OK');
+    }
+
+  })
+
 })
 
 app.listen(process.env.PORT);

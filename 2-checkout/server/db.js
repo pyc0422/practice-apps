@@ -23,22 +23,22 @@ db.connectAsync()
       `CREATE TABLE IF NOT EXISTS responses (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR (40) NOT NULL,
-        email VARCHER (100) NOT NULL
-        s_id VARCHAR (400) NOT NULL,
-        line1 VARCHER (400) NOT NULL,
-        line2 VARCHER (400),
-        city VARCHER(40) NOT NULL,
-        state VARCHER(100) NOT NULL,
+        email VARCHAR (100) NOT NULL,
+        password VARCHAR(400) NOT NULL,
+        line VARCHAR (400) NOT NULL,
+        city VARCHAR(40) NOT NULL,
+        state VARCHAR(100) NOT NULL,
         zip INT NOT NULL,
         phone INT NOT NULL,
-        creditCard: VARCHER(400) NOT NULL,
-        expire_month: INT,
-        expire_year: INT,
-        cvv: INT NOT NULL,
-        billing_zip: INT NOT NULL
+        creditCard VARCHAR(400) NOT NULL,
+        expired VARCHAR (80) NOT NULL,
+        cvv INT NOT NULL,
+        billing_zip INT NOT NULL,
+        s_id VARCHAR (400) NOT NULL,
         )`
     )
   )
   .catch((err) => console.log('database: ',err));
+
 
 module.exports = db;

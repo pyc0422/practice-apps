@@ -16,6 +16,17 @@ class App extends React.Component {
       clicked: true
     })
   }
+
+  handleSubmit(data) {
+    console.log('finnal data: ', data);
+    axios.post('/', data)
+      .then(() => {
+        this.setState({
+          clicked: false
+        })
+      });
+  }
+
   render() {
     return (
       <div>
@@ -23,7 +34,7 @@ class App extends React.Component {
         <div>
           <code>Page Cookie: {JSON.stringify(document.cookie, undefined, "\t")}</code>
           <br/>
-          {this.state.clicked ? <User /> : <button onClick={this.handleClick.bind(this)}>Check Out</button>}
+          {this.state.clicked ? <User submit={this.handleSubmit.bind(this)}/> : <button onClick={this.handleClick.bind(this)}>Check Out</button>}
         </div>
       </div>
     )
