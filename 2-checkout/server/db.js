@@ -28,13 +28,13 @@ db.connectAsync()
         line VARCHAR (400) NOT NULL,
         city VARCHAR(40) NOT NULL,
         state VARCHAR(100) NOT NULL,
-        zip INT NOT NULL,
-        phone INT NOT NULL,
+        zip VARCHAR(20) NOT NULL,
+        phone VARCHAR(200) NOT NULL,
         creditCard VARCHAR(400) NOT NULL,
-        expired VARCHAR (80) NOT NULL,
+        expired VARCHAR (20) NOT NULL,
         cvv INT NOT NULL,
-        billing_zip INT NOT NULL,
-        s_id VARCHAR (400) NOT NULL,
+        billing_zip VARCHAR(10) NOT NULL,
+        s_id VARCHAR (400) NOT NULL
         )`
     )
   )

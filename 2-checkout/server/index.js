@@ -26,9 +26,9 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   const data = req.body;
   data.s_id = req.session_id;
-  let query = `INSERT INTO responses(name, email, password, s_id, line, city, state, zip, phone, creaditCard, expired, cvv, billing_zip)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  let params = Object.keys(data);
+  let query = `INSERT INTO responses(name, email, password, line, city, state, zip, phone, creditCard, expired, cvv, billing_zip, s_id)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  let params = Object.values(data);
   console.log(params);
   db.query(query, params, (err) => {
     if (err){

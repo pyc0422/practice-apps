@@ -8,12 +8,12 @@ const Comfirm = (props) => {
     line: props.address.line1 + props.address.line2,
     city: props.address.city,
     state: props.address.state,
-    zip: parseInt(props.address.zip),
-    phone: parseInt(props.address.phone),
+    zip: props.address.zip,
+    phone: props.address.phone,
     card: props.card.card,
     expired: props.card.expired,
     cvv: parseInt(props.card.cvv),
-    billingZip: parseInt(props.card.billingZip)
+    billingZip: props.card.billingZip
   }
   return (
     <div>
