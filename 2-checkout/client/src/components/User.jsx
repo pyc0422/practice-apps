@@ -13,11 +13,11 @@ const User = (props) => {
         </h2>
         <form>
           <label>Name:
-            <input onChange={(e) => setName(e.target.value)} type="text" value={name}></input>
+            <input minLength="1" maxLength="10" onChange={(e) => setName(e.target.value)} type="text" value={name}></input>
           </label>
           <br/>
           <label>E-mail:
-            <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
+            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
           </label>
           <br/>
           <label>Password:
@@ -30,12 +30,24 @@ const User = (props) => {
       </div>
     )
   } else {
-    let user={
-      name: name,
-      email, email,
-      password, password
-    };
-    return <Address user={user} submit={props.submit} />
+    if (!name.length) {
+      alert('Please Enter username!');
+      setClicked(false);
+    } else if (!email.length || email.indexOf('@') === -1) {
+      alert('Please enter valid email!');
+      setClicked(false);
+    } else if (!password.length) {
+      alert('Please enter valid Password!');
+      setClicked(false);
+    } else {
+      let user={
+        name: name,
+        email, email,
+        password, password
+      };
+      return <Address user={user} submit={props.submit} />
+    }
+
   }
 
 }

@@ -41,4 +41,17 @@ db.connectAsync()
   .catch((err) => console.log('database: ',err));
 
 
-module.exports = db;
+module.exports = {
+  save: (params, cb) => {
+    let query = `INSERT INTO responses(name, email, password, line, city, state, zip, phone, creditCard, expired, cvv, billing_zip, s_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.query(query, params, (err) => {
+      if (err){
+        console.log(err);
+      } else {
+        cb();
+
+      }
+    })
+  }
+};

@@ -15,7 +15,6 @@ const Address = (props) =>{
     return (
       <div>
         <h2>Address</h2>
-        <p>{JSON.stringify(props.user)}</p>
         <form>
           <label>Line1:
             <input type="text" onChange={(e) => setLine1(e.target.value)} value={line1}/>
@@ -45,15 +44,33 @@ const Address = (props) =>{
       </div>
     )
   } else if (clicked) {
-    let address = {
-      line1: line1,
-      line2: line2,
-      city: city,
-      state: state,
-      zip: zip,
-      phone: phone
+    if (!line1.length) {
+      alert('Please enter valid address in Line1!');
+      setClicked(false);
+    } else if (!city.length) {
+      alert('Please enter valid city name!');
+      setClicked(false);
+    } else if (!state.length) {
+      alert('Please enter valid state name!');
+      setClicked(false);
+    } else if(!zip.length || zip.match(/\D/g) !== null){
+      console.log(zip.match(/\D/g));
+      alert('Please enter valid zip code!');
+      setClicked(false);
+    } else if (!phone.length || phone.match(/\D/g)!== null) {
+      alert('Please enter valid phone number!');
+      setClicked(false);
+    } else {
+      let address = {
+        line1: line1,
+        line2: line2,
+        city: city,
+        state: state,
+        zip: zip,
+        phone: phone
+      }
+      return <Card user={props.user} address={address} submit={props.submit}/>
     }
-    return <Card user={props.user} address={address} submit={props.submit}/>
   } else if (prev) {
     return <User user={props.user} />
   }

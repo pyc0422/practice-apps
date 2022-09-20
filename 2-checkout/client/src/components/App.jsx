@@ -22,7 +22,7 @@ class App extends React.Component {
     console.log('finnal data: ', data);
     axios.post('/form', data)
       .then((message) => {
-        console.log(message.data);
+        alert(message.data);
         this.setState({
           clicked: false,
           message: message.data
@@ -40,9 +40,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <p>Hello, World!</p>
+        <p>Check Out Page</p>
         <div>
-          <code>{this.state.message}Page Cookie: {JSON.stringify(document.cookie, undefined, "\t")}</code>
+          <p>{this.state.message}</p>
+          <code>Page Cookie: {JSON.stringify(document.cookie, undefined, "\t")}</code>
           <br/>
           {this.state.clicked ? <User submit={this.handleSubmit.bind(this)} prev={this.handlePrev.bind(this)} /> : <button onClick={this.handleClick.bind(this)}>Check Out</button>}
         </div>

@@ -1,20 +1,39 @@
 import React,{ useState, useEffect } from 'react';
 import Comfirm from './Comfirm.jsx';
 const Card = (props) => {
-  const [card, setCard] = useState(0);
+  const [card, setCard] = useState('');
   const [expired, setExpired] = useState('');
   const [cvv, setCvv] = useState(0);
-  const [billingZip, setBillingZip] = useState(0);
+  const [billingZip, setBillingZip] = useState('');
   const [clicked, setClicked] = useState(false);
 
   if (clicked) {
-    let cardInfo = {
-      card: card,
-      expired: expired,
-      cvv: cvv,
-      billingZip: billingZip
+    let arr = expired.split('-');
+    let month = parseInt(arr[1]);
+    let year = parseInt(arr[0]);
+    console.log(arr);
+    if (!card.length || card.length < 10) {
+      alert("Please enter valid Credit Card Number");
+      setClicked(false);
+    } else if (!expired.length || year < 2022 || (month < 9 && year === 2022)) {
+      alert('Expried date should later then today!');
+      setClicked(false);
+    } else if (cvv < 100 || cvv.match(/\D/g) !== null) {
+      alert('Please enter valid CVV');
+      setClicked(false);
+    } else if (!billingZip.length || billingZip.match(/\D/g) !== null) {
+      alert('Please enter valid billing zip code!');
+      setClicked(false);
+    } else {
+      let cardInfo = {
+        card: card,
+        expired: expired,
+        cvv: cvv,
+        billingZip: billingZip
+      }
+      return <Comfirm user={props.user} address={props.address} card={cardInfo} submit={props.submit}/>
     }
-    return <Comfirm user={props.user} address={props.address} card={cardInfo} submit={props.submit}/>
+
   }
   return (
     <div>
@@ -36,8 +55,6 @@ const Card = (props) => {
         </label>
         <br/>
         <input type="button" onClick={() => setClicked(true)} value="Next"/>
-        {JSON.stringify(props.user)}
-        {JSON.stringify(props.address)}
       </form>
     </div>
 
