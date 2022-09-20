@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from './Card.jsx';
-
+import User from  './User.jsx';
 
 const Address = (props) =>{
   const [line1, setLine1] = useState('');
@@ -10,17 +10,8 @@ const Address = (props) =>{
   const [zip, setZip] = useState('');
   const [phone, setPhone] = useState('');
   const [clicked, setClicked] = useState(false);
-  if (clicked) {
-    let address = {
-      line1: line1,
-      line2: line2,
-      city: city,
-      state: state,
-      zip: zip,
-      phone: phone
-    }
-    return <Card user={props.user} address={address} submit={props.submit}/>
-  } else {
+  const [prev, setPrev] = useState(false);
+  if (!clicked && !prev) {
     return (
       <div>
         <h2>Address</h2>
@@ -48,10 +39,23 @@ const Address = (props) =>{
             <input type="text" onChange={(e) => setPhone(e.target.value)} value={phone}/>
           </label>
           <br/>
+          <input type="button" onClick={() => {setPrev(true)}} value="Prev" />
           <input type="button" onClick={() => {setClicked(true)}} value="Next" />
         </form>
       </div>
     )
+  } else if (clicked) {
+    let address = {
+      line1: line1,
+      line2: line2,
+      city: city,
+      state: state,
+      zip: zip,
+      phone: phone
+    }
+    return <Card user={props.user} address={address} submit={props.submit}/>
+  } else if (prev) {
+    return <User user={props.user} />
   }
 
 }

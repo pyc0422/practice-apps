@@ -6,32 +6,30 @@ module.exports = (req, res, next) => {
    * Parse cookies in incoming request:
    *
    */
-  // console.log('origin cookie: ', req.headers.cookies);
-  // if (!req.cookies) {
-  //   console.log('no cookies!');
-  // }
-  console.log('start parsing cookies');
-  let cookieString = req.get("Cookie") || "";
-  console.log('cookiesString: ', cookieString);
+  if (!req.get("Cookie")) {
+    let cookieString = "";
+    parsedCookies = cookieString.split("; ").reduce((cookies, cookie) => {
+      if (cookie.length) {
+        let index = cookie.indexOf("=");
+        let key = cookie.slice(0, index);
+        let token = cookie.slice(index + 1);
+        cookies[key] = token;
+      }
+      return cookies;
+    }, {});
 
-  parsedCookies = cookieString.split("; ").reduce((cookies, cookie) => {
-    if (cookie.length) {
-      let index = cookie.indexOf("=");
-      let key = cookie.slice(0, index);
-      let token = cookie.slice(index + 1);
-      cookies[key] = token;
+    if (parsedCookies.s_id) {
+      req.session_id = parsedCookies.s_id;
+    } else {
+      req.session_id = uuidv4();
+      res.cookie("s_id", req.session_id);
     }
-    return cookies;
-  }, {});
-
-  if (parsedCookies.s_id) {
-    req.session_id = parsedCookies.s_id;
+    next();
   } else {
-    req.session_id = uuidv4();
-    res.cookie("s_id", req.session_id);
+    req.message = 'You already purchased!'
+    next();
   }
-  next();
-
-
+  // let cookieString = req.get("Cookie") || "";
+  // console.log('string: ', cookieString);
 
 };

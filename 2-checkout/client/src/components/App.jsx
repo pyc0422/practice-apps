@@ -5,7 +5,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clicked: false
+      clicked: false,
+      message: ''
     };
 
   }
@@ -20,11 +21,20 @@ class App extends React.Component {
   handleSubmit(data) {
     console.log('finnal data: ', data);
     axios.post('/form', data)
-      .then(() => {
+      .then((message) => {
+        console.log(message.data);
         this.setState({
-          clicked: false
+          clicked: false,
+          message: message.data
         })
       });
+  }
+
+  handlePrev(e) {
+    e.preventDefault();
+    this.setState({
+      clicked: false
+    })
   }
 
   render() {
@@ -32,9 +42,9 @@ class App extends React.Component {
       <div>
         <p>Hello, World!</p>
         <div>
-          <code>Page Cookie: {JSON.stringify(document.cookie, undefined, "\t")}</code>
+          <code>{this.state.message}Page Cookie: {JSON.stringify(document.cookie, undefined, "\t")}</code>
           <br/>
-          {this.state.clicked ? <User submit={this.handleSubmit.bind(this)}/> : <button onClick={this.handleClick.bind(this)}>Check Out</button>}
+          {this.state.clicked ? <User submit={this.handleSubmit.bind(this)} prev={this.handlePrev.bind(this)} /> : <button onClick={this.handleClick.bind(this)}>Check Out</button>}
         </div>
       </div>
     )

@@ -24,7 +24,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/form', sessionHandler, (req, res) => {
-
+  if (req.message) {
+    console.log('message: ', req.message);
+    return res.json(req.message);
+  }
   const data = req.body;
   data.s_id = req.session_id;
   let query = `INSERT INTO responses(name, email, password, line, city, state, zip, phone, creditCard, expired, cvv, billing_zip, s_id)
